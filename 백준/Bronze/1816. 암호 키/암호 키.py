@@ -1,16 +1,17 @@
 import sys
+
 input = sys.stdin.readline
 
-nums = []
-
 n = int(input())
-for _ in range(n):
-    nums.append(int(input()))
+flag = False
 
-for i in range(n):
-    for j in range(2, 1000001):
-        if nums[i] % j == 0:
+for _ in range(n):
+    num = int(input())
+    flag = False
+    for i in range(2, 1000001):
+        if num % i == 0:
+            flag = True
             print("NO")
             break
-    if j == 1000000:
+    if not flag:
         print("YES")
