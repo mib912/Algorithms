@@ -1,17 +1,28 @@
-
 import sys
-from itertools import permutations
+
+input = sys.stdin.readline
 
 n = int(input())
 A = list(map(int, input().split()))
 
-res = 0
-perm = permutations(A)
+result = []
+selected = []
+visited = [False] * n
+def recur(depth):
+    global res
 
-for p in perm:
-    tmp = 0
-    for i in range(n-1):
-        tmp += abs(p[i] - p[i+1])
-    res = max(res, tmp)
+    if depth == n:
+        result.append(sum(abs(selected[i]-selected[i+1]) for i in range(n-1)))
+        return
 
-print(res)
+    for i in range(n):
+        if visited[i]:
+            continue
+        selected.append(A[i])
+        visited[i] = True
+        recur(depth+1)
+        visited[i] = False
+        selected.pop()
+
+recur(0)
+print(max(result))
