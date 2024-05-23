@@ -2,14 +2,12 @@ import sys
 input = sys.stdin.readline
 
 n = int(input())
-ls = [list(map(int, input().split())) for _ in range(n)]
 dp = [0] * (n+1)  # dp[i] = i일까지 일 했을 때 벌 수 있는 최대 이익
 
-profit = 0
-for i in range(n):
-    profit = max(dp[i], profit)
-    if i + ls[i][0] > n:  # 퇴사일 넘어갔을 경우
-        continue
+for i in range(1, n+1):
+    t, p = map(int, input().split())
+    dp[i] = max(dp[i-1], dp[i])  # 이전일 최대이익과 비교
 
-    dp[i+ls[i][0]] = max(profit+ls[i][1], dp[i+ls[i][0]])  # i일에 상담했을 경우
-print(max(dp))
+    if i+t <= n+1:  # n=7이면 8일차에 퇴사
+        dp[i+t-1] = max(dp[i-1]+p, dp[i+t-1])  # i+t-1 = 당일도 포함
+print(dp[-1])
