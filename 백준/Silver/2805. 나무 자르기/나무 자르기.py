@@ -3,19 +3,21 @@ input = sys.stdin.readline
 
 n, m = map(int, input().split())
 trees = list(map(int, input().split()))
-trees.sort()
 
-s = 1
-e = trees[-1]
-
-while s <= e:
+start = 0
+end = max(trees)
+answer = 0 # 절단기 높이
+while start <= end:
+    mid = (start + end) // 2
     total = 0
-    mid = (s+e)//2
     for t in trees:
         if t > mid:
-            total += (t - mid)
+            total += t - mid
+    
     if total >= m:
-        s = mid+1
-    else:  # 높이를 낮춰야 함
-        e = mid-1
-print(e)  # 높이의 최댓값
+        start = mid + 1
+        answer = mid
+    else:
+        end = mid - 1
+
+print(answer)
