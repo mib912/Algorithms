@@ -1,11 +1,17 @@
-from itertools import combinations
+import sys
+input = sys.stdin.readline
+
 heights = []
 for _ in range(9):
     heights.append(int(input()))
 
-for h in list(combinations(heights, 7)):
-    total = sum(h)
-    if total == 100:
-        for i in sorted(h):
-            print(i)
-        break
+heights.sort()
+total = sum(heights)
+for i in range(9):
+    for j in range(i+1, 9):
+        if total - heights[i] - heights[j] == 100:
+            for h in heights:
+                if h == heights[i] or h == heights[j]:
+                    continue
+                print(h)
+            exit()
