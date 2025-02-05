@@ -1,13 +1,13 @@
 import sys
-
 input = sys.stdin.readline
 
+# a^2 = b^2 + n
 n = int(input())
-cnt = 0
+answer = 0
 
-for a in range(1,501):
-    for b in range(1,501):
+for b in range(1, 501):
+    for a in range(b, 501):
         if a**2 == b**2 + n:
-            cnt +=1
+            answer += 1
 
-print(cnt)
+print(answer)
