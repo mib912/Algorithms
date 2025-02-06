@@ -1,12 +1,12 @@
 import sys
-
 input = sys.stdin.readline
 
 n, m, k = map(int, input().split())
-cnt = 0
 
-while n >= 2 and m >= 1 and n+m >= k+3:
+answer = 0
+while n >= 2 and m >= 1 and n+m >= 3 + k:
     n -= 2
     m -= 1
-    cnt += 1
-print(cnt)
+    answer += 1
+
+print(answer)
