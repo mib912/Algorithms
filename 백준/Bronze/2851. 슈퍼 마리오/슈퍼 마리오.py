@@ -1,16 +1,30 @@
 import sys
 input = sys.stdin.readline
 
-result, score = 0,0
+mushrooms = []
 for _ in range(10):
-    score = int(input())
-    result += score
-    if result == 100:
-        break
-    elif result > 100:
-        if result - 100 <= 100 - (result - score):
-            break
+    mushrooms.append(int(input()))
+
+total = 0
+answer = []
+for i in range(10):
+    before = total
+    total += mushrooms[i]
+
+    if total > 100:
+        if 100 - before > total - 100:
+            answer.append(total)
+        elif 100 - before < total - 100:
+            answer.append(before)
         else:
-            result -= score
-            break
-print(result)
+            answer.append(total)
+        break
+
+    elif total == 100:
+        answer.append(total)
+        break
+    elif i == 9 and total < 100:
+        answer.append(total)
+        break
+
+print(max(answer))
