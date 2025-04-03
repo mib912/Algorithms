@@ -13,22 +13,26 @@ for _ in range(n):
     graph.append(list(map(int, input().split())))
     maxNum = max(maxNum, max(graph[-1]))
 
-def dfs(x,y,num): # num은 maxNum
+def bfs(x,y,num):
+    que = deque()
+    que.append((x,y))
+    visited[x][y] = True
+
     dx = [0,0,1,-1]
     dy = [1,-1,0,0]
+    while que:
+        a,b = que.popleft()
+        for i in range(4):
+            nx = a + dx[i]
+            ny = b + dy[i]
 
-    visited[x][y] = True
-    for i in range(4):
-        nx = x + dx[i]
-        ny = y + dy[i]
-        if nx < 0 or nx >= n or ny < 0 or ny >= n:
-            continue
-        if visited[nx][ny] and graph[nx][ny] <= num:
-            continue
-        if not visited[nx][ny] and graph[nx][ny] > num:
+            if nx < 0 or nx >= n or ny < 0 or ny >= n:
+                continue
+            if visited[nx][ny] or graph[nx][ny] <= num:
+                continue
+            que.append((nx,ny))
             visited[nx][ny] = True
-            dfs(nx,ny,num)
-
+    
 
 result = 0
 for m in range(maxNum):
@@ -37,7 +41,7 @@ for m in range(maxNum):
     for i in range(n):
         for j in range(n):
             if graph[i][j] > m and visited[i][j] == False:
-                dfs(i,j,m)
+                bfs(i,j,m)
                 cnt += 1
     result = max(result, cnt)
 print(result)
